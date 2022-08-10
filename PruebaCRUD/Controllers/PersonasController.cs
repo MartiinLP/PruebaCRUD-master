@@ -4,22 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PruebaCRUD.Models;
+using PruebaCRUD.Services;
 
 namespace PruebaCRUD.Controllers
 {
-    public class PersonasController : Controller
-    {
-        private TestCRUDContext _context;
-        public PersonasController(TestCRUDContext context)
+    public class PersonasController :Controller
+    {      
+        private readonly IPersonaService _personaService;
+        public PersonasController(IPersonaService personaService)
         {
-            this._context = context;
+            this._personaService = personaService;
         }       
 
         public IActionResult Index()
         {
             try
             {
-                ViewBag.Personas = _context.Personas.ToList();
+                var personas = _personaService.GetPersonas();
+                ViewBag.Personas = personas;
                 return View("Personas");
             }
             catch (Exception ex)
@@ -36,50 +38,9 @@ namespace PruebaCRUD.Controllers
         public IActionResult CreatePersona(Personas persona)
         {
             try
-            {                
-                _context.Personas.Add(persona);
-                _context.SaveChanges();
-                return Ok();
-            }
-            catch (Exception ex)
             {
-                string msg = ex.Message;
-                string stack = ex.StackTrace;
-                string inner = (ex.InnerException == null ? "" : ex.InnerException.Message);
-                return StatusCode(500, "Message ===> " + msg + " stack ===> " + stack + " ////// inner ===> " + inner);
-            }
-        }
-
-        [HttpPost("UpdatePersona")]
-        public IActionResult UpdatePersona(Personas persona)
-        {
-            try
-            {                
-                var per = _context.Personas.Where(x => x.Id == persona.Id).First();
-                _context.Personas.Attach(per);
-                per.Nombre = persona.Nombre;
-                per.Correo = persona.Correo;
-                per.Edad = persona.Edad;               
-                _context.SaveChanges();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                string stack = ex.StackTrace;
-                string inner = (ex.InnerException == null ? "" : ex.InnerException.Message);
-                return StatusCode(500, "Message ===> " + msg + " stack ===> " + stack + " ////// inner ===> " + inner);
-            }
-        }
-
-
-        [HttpGet("PersonaById/{Id}")]
-        public IActionResult PersonaById(int Id)
-        {
-            try
-            {
-                var per = _context.Personas.Where(x => x.Id == Id).First();
-                return Ok(per);
+                var result = _personaService.CreatePersona(persona);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -94,11 +55,9 @@ namespace PruebaCRUD.Controllers
         public IActionResult RemovePersona(int Id)
         {
             try
-            {                
-                var per = _context.Personas.Where(x => x.Id == Id).First();               
-                _context.Personas.Remove(per);                
-                _context.SaveChanges();
-                return Ok();
+            {
+                var result = _personaService.RemovePersona(Id);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -108,5 +67,39 @@ namespace PruebaCRUD.Controllers
                 return StatusCode(500, "Message ===> " + msg + " stack ===> " + stack + " ////// inner ===> " + inner);
             }
         }
+
+        [HttpPost("UpdatePersona")]
+        public IActionResult UpdatePersona(Personas persona)
+        {
+            try
+            {
+                var result = _personaService.UpdatePersona(persona);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                string stack = ex.StackTrace;
+                string inner = (ex.InnerException == null ? "" : ex.InnerException.Message);
+                return StatusCode(500, "Message ===> " + msg + " stack ===> " + stack + " ////// inner ===> " + inner);
+            }
+        }
+
+        [HttpGet("DetailsPersona/{Id}")]
+        public IActionResult DetailsPersona(int Id)
+        {
+            try
+            {
+                var result = _personaService.DetailsPersona(Id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                string stack = ex.StackTrace;
+                string inner = (ex.InnerException == null ? "" : ex.InnerException.Message);
+                return StatusCode(500, "Message ===> " + msg + " stack ===> " + stack + " ////// inner ===> " + inner);
+            }
+        }      
     }
 }

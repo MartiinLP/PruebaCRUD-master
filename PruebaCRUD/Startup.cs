@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PruebaCRUD.Models;
+using PruebaCRUD.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace PruebaCRUD
         {
             services.AddRazorPages();
 
+            services.AddTransient<IPersonaService, PersonaService>();
+
+            services.AddHttpContextAccessor();
 
             services.AddDbContext<TestCRUDContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppDbConnectionString")));
         }

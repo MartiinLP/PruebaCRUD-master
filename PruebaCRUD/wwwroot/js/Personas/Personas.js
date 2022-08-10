@@ -58,31 +58,6 @@ $(document).ready(function () {
     });
 });
 
-function GetDetallesPersona(Id, opcion) {
-    event.preventDefault();
-    $.ajax({
-        type: "GET",
-        url: "/PersonaById/" + Id,
-        success: function (response) {
-            if (opcion == 'Editar') {
-                $("#Id").val(response.id);
-                $("#NombreU").val(response.nombre);
-                $("#CorreoU").val(response.correo);
-                $("#EdadU").val(response.edad);
-                $('#Update').modal('show');
-            } else {
-                $("#NombreD").val(response.nombre);
-                $("#CorreoD").val(response.correo);
-                $("#EdadD").val(response.edad);
-                $('#Detalles').modal('show');
-            }
-        },
-        error: function (err) {
-            console.log(err)
-        }
-    });
-}
-
 function CreatePersona() {
     event.preventDefault();
 
@@ -235,3 +210,29 @@ function RemovePersona(Id) {
         }
     })
 }
+
+function DetailsPersona(Id, opcion) {
+    event.preventDefault();
+    $.ajax({
+        type: "GET",
+        url: "/DetailsPersona/" + Id,
+        success: function (response) {
+            if (opcion == 'Editar') {
+                $("#Id").val(response.id);
+                $("#NombreU").val(response.nombre);
+                $("#CorreoU").val(response.correo);
+                $("#EdadU").val(response.edad);
+                $('#Update').modal('show');
+            } else {
+                $("#NombreD").val(response.nombre);
+                $("#CorreoD").val(response.correo);
+                $("#EdadD").val(response.edad);
+                $('#Detalles').modal('show');
+            }
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    });
+}
+
