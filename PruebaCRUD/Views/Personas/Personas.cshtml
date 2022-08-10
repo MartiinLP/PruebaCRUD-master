@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<PruebaCRUD.Models.Personas>
-@{
-    ViewData["Title"] = "Personas";
-}
+@{ ViewData["Title"] = "Personas"; }
 
 <style>
 
@@ -35,7 +33,7 @@
             <button class="btn btn-success" data-toggle="modal" data-target="#Add">Agregar persona</button>
         </div>
     </div>
-    <div class="card-body">        
+    <div class="card-body">
 
         <table class="table" id="table3">
             <thead>
@@ -49,17 +47,16 @@
             <tbody>
                 @foreach (var per in ViewBag.Personas)
                 {
-                    <tr>
-                        <td>@per.Nombre</td>
-                        <td>@per.Correo</td>
-                        <td>@per.Edad</td>
-                        <td>                            
-                            <button class="btn btn-warning" onclick="GetDetallesPersona(@per.Id, 'Editar')">Editar</button>
-                            <button class="btn btn-danger" onclick="RemovePersona(@per.Id)">Eliminar</button>
-                            <button class="btn btn-primary" onclick="GetDetallesPersona(@per.Id, 'Detalle')">Detalles</button>
-                        </td>
-                    </tr>
-                }
+    <tr>
+        <td>@per.Nombre</td>
+        <td>@per.Correo</td>
+        <td>@per.Edad</td>
+        <td>
+            <button class="btn btn-warning" onclick="GetDetallesPersona(@per.Id, 'Editar')">Editar</button>
+            <button class="btn btn-danger" onclick="RemovePersona(@per.Id)">Eliminar</button>
+            <button class="btn btn-primary" onclick="GetDetallesPersona(@per.Id, 'Detalle')">Detalles</button>
+        </td>
+    </tr>}
             </tbody>
         </table>
     </div>
@@ -80,21 +77,21 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nombre</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="NombreC" id="NombreC" maxlength="50" placeholder="Nombre de persona" autocomplete="off">
+                            <input type="text" class="form-control" name="NombreC" id="NombreC" maxlength="50" placeholder="Nombre de la persona" autocomplete="off">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Correo</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="CorreoC" id="CorreoC" maxlength="50" placeholder="Correo de persona" autocomplete="off">
+                            <input type="text" class="form-control" name="CorreoC" id="CorreoC" maxlength="50" placeholder="Correo de la persona" autocomplete="off">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Edad</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="EdadC" id="EdadC" maxlength="50" placeholder="Edad de persona" autocomplete="off">
+                            <input type="number" class="form-control" name="EdadC" id="EdadC" max="150" placeholder="Edad de la persona" autocomplete="off">
                         </div>
                     </div>
 
@@ -108,7 +105,7 @@
     </div>
 </div>
 
-@*Editar*@
+@*Update Persona*@
 <div class="modal fade" id="Update" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="max-width:45em;" role="document">
         <div class="modal-content">
@@ -119,29 +116,29 @@
                 </button>
 
             </div>
-            <div class="modal-body">                
-                <form id="UpdatePersonaForm" method="POST">
+            <div class="modal-body">
+                <form id="UpdatePersonaForm">
                     <input type="hidden" />
                     <input type="hidden" id="Id" name="Id" />
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nombre</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="NombreU" name="NombreU" maxlength="50" placeholder="Nombre de persona" required autocomplete="off">
+                            <input type="text" class="form-control" id="NombreU" name="NombreU" maxlength="50" placeholder="Nombre de la persona" required autocomplete="off">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Correo</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="CorreoU" name="CorreoU" maxlength="50" placeholder="Correo de Persona" required autocomplete="off">
+                            <input type="text" class="form-control" id="CorreoU" name="CorreoU" maxlength="50" placeholder="Correo de la Persona" required autocomplete="off">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Correo</label>
+                        <label class="col-sm-2 col-form-label">Edad</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="EdadU" name="EdadU" max="150" placeholder="Edad de Persona" required autocomplete="off">
+                            <input type="number" class="form-control" id="EdadU" name="EdadU" max="150" placeholder="Edad de la Persona" required autocomplete="off">
                         </div>
                     </div>
 
@@ -166,32 +163,32 @@
                 </button>
 
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <form id="DetallesPersonaForm">
-                    <input type="hidden" />                    
+                    <input type="hidden" />
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nombre</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="NombreD" name="NombreD" maxlength="50" disabled placeholder="Nombre de persona" required autocomplete="off">
+                            <input type="text" class="form-control" id="NombreD" name="NombreD" maxlength="50" disabled>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Correo</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="CorreoD" name="CorreoD" maxlength="50" disabled placeholder="Correo de Persona" required autocomplete="off">
+                            <input type="text" class="form-control" id="CorreoD" name="CorreoD" maxlength="50" disabled>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Edad</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="EdadD" name="EdadD" max="150" disabled placeholder="Edad de Persona" required autocomplete="off">
+                            <input type="number" class="form-control" id="EdadD" name="EdadD" max="150" disabled>
                         </div>
                     </div>
 
-                    <div class="form-group float-right">                        
+                    <div class="form-group float-right">
                         <button data-dismiss="modal" class="btn btn-danger">Cerrar</button>
                     </div>
                 </form>
@@ -200,12 +197,11 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
 
-@*<script src="~/lib/datatables.net/js/jquery.dataTables.js"></script>
-    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
-    <script src="~/js/custom/data-table.js"></script>*@
-
-@*<script src="~/js/Personas/Personas.js"></script>*@
-
+<script src="~/js/Personas/Personas.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
