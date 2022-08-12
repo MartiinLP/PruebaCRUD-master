@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PruebaCRUD.Models;
+using PruebaCRUD.Repository;
 using PruebaCRUD.Services;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace PruebaCRUD
             services.AddRazorPages();
 
             services.AddTransient<IPersonaService, PersonaService>();
+            services.AddTransient<IPersonaRepository, PersonaRepository>();
 
             services.AddHttpContextAccessor();
 
