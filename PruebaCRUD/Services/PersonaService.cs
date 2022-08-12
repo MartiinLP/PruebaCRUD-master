@@ -3,51 +3,44 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PruebaCRUD.Repository;
 
 namespace PruebaCRUD.Services
 {
     public class PersonaService : IPersonaService
     {
-        private TestCRUDContext _context;
-        public PersonaService(TestCRUDContext context)
+        private readonly IPersonaRepository _personaRepository;
+        public PersonaService(IPersonaRepository personaRepository)
         {
-            this._context = context;
+            this._personaRepository = personaRepository;
         }
         public bool CreatePersona(Personas persona)
-        {           
-                _context.Personas.Add(persona);
-                _context.SaveChanges();
+        {
+                bool result = _personaRepository.CreatePersona(persona);
                 return true;                                  
         }
 
         public Personas DetailsPersona(int Id)
         {
-            var persona = _context.Personas.Where(x => x.Id == Id).First();
+            Personas persona = _personaRepository.DetailsPersona(Id);
             return persona;
         }
 
         public List<Personas> GetPersonas()
         {
-           var personas = _context.Personas.ToList();
+            List<Personas> personas = _personaRepository.GetPersonas();
             return personas;
         }
 
         public bool RemovePersona(int Id)
         {
-            var persona = _context.Personas.Where(x => x.Id == Id).First();
-            _context.Personas.Remove(persona);
-            _context.SaveChanges();
+            bool result = _personaRepository.RemovePersona(Id);
             return true;
         }
 
         public bool UpdatePersona(Personas persona)
         {
-            var _persona = _context.Personas.Where(x => x.Id == persona.Id).First();
-            _context.Personas.Attach(_persona);
-            _persona.Nombre = persona.Nombre;
-            _persona.Correo = persona.Correo;
-            _persona.Edad = persona.Edad;
-            _context.SaveChanges();
+            bool result = _personaRepository.UpdatePersona(persona);
             return true;
         }
     }
